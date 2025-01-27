@@ -223,7 +223,7 @@ body {
   <div id="audioPlayerSection" style="display: none; margin-top: 20px; text-align: center;">
     <h4 style="font-size: 18px; margin-bottom: 10px; color: #ddd;">🎵 Generated Audio:</h4>
     <audio id="audioPlayer" controls style="width: 100%; max-width: 400px;">
-      <source src="https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/EQw2iMyeqGhNinh9Av2eNh4B0dFLHI0v1x2XNXyDm8bTmg?e=B6jYGh&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiJmNDNlYzM1MC1hOThiLTQwMzAtOTJkMi1mYWZlYmE1MjgzMzEifX0%3D" type="audio/mpeg">
+      <source src="https://shivam-MBZUAI.github.io/Music-Generator/MusicGen/musicgen_Analysis_Baseline_1.wav" type="audio/wav">
       Your browser does not support the audio element.
     </audio>
   </div>
@@ -234,19 +234,19 @@ body {
   // Data for models, genres, and corresponding audio URLs
   const genres = {
     model1: [
-      { name: "Hindustani Classical", icon: "🎻", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/EQw2iMyeqGhNinh9Av2eNh4B0dFLHI0v1x2XNXyDm8bTmg?e=B6jYGh&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiJmNDNlYzM1MC1hOThiLTQwMzAtOTJkMi1mYWZlYmE1MjgzMzEifX0%3D" },
-      { name: "Maqam", icon: "🎤", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/EQw2iMyeqGhNinh9Av2eNh4B0dFLHI0v1x2XNXyDm8bTmg?e=B6jYGh&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiJmNDNlYzM1MC1hOThiLTQwMzAtOTJkMi1mYWZlYmE1MjgzMzEifX0%3D" },
-      { name: "Jazz", icon: "🎷", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/EQw2iMyeqGhNinh9Av2eNh4B0dFLHI0v1x2XNXyDm8bTmg?e=B6jYGh&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiJmNDNlYzM1MC1hOThiLTQwMzAtOTJkMi1mYWZlYmE1MjgzMzEifX0%3D" }
+      { name: "Hindustani Classical", icon: "🎻", audio: "MusicGen/musicgen_Analysis_Baseline_1.wav" },
+      { name: "Maqam", icon: "🎤", audio: "MusicGen/musicgen_Analysis_Baseline_1.wav" },
+      { name: "Jazz", icon: "🎷", audio: "MusicGen/musicgen_Analysis_Baseline_1.wav" }
     ],
     model2: [
-      { name: "Folk", icon: "🎸", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/ERl9jgn9eSpEoFJiXR-iJ_ABYN5LGYEEuiVviiTBjt_m2w?e=G90El5&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiJjM2EzOTkxMi0xNjk3LTRhNzktYWYwZS02YmJkMjE3MzJjZDMifX0%3D" },
-      { name: "Rock", icon: "🎵", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/ERl9jgn9eSpEoFJiXR-iJ_ABYN5LGYEEuiVviiTBjt_m2w?e=G90El5&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiJjM2EzOTkxMi0xNjk3LTRhNzktYWYwZS02YmJkMjE3MzJjZDMifX0%3D" },
-      { name: "Electronic", icon: "🎹", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/ERl9jgn9eSpEoFJiXR-iJ_ABYN5LGYEEuiVviiTBjt_m2w?e=G90El5&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiJjM2EzOTkxMi0xNjk3LTRhNzktYWYwZS02YmJkMjE3MzJjZDMifX0%3D" }
+      { name: "Folk", icon: "🎸", audio: "MusicGen/musicgen_Analysis_Baseline_3.wav" },
+      { name: "Rock", icon: "🎵", audio: "MusicGen/musicgen_Analysis_Baseline_3.wav" },
+      { name: "Electronic", icon: "🎹", audio: "MusicGen/musicgen_Analysis_Baseline_3.wav" }
     ],
     model3: [
-      { name: "Maqam", icon: "🪕", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/ES8CoQF7K2VKioW3IR_IEWUBm_0EcYTDHPVzXXJ3KXX9Rg?e=th1DXu&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiIwNTlkOTg2Mi0xNTY5LTRiMzktOTFmZi0wYjMxZDM0MWExNDkifX0%3D" },
-      { name: "Ambient", icon: "🌌", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/ES8CoQF7K2VKioW3IR_IEWUBm_0EcYTDHPVzXXJ3KXX9Rg?e=th1DXu&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiIwNTlkOTg2Mi0xNTY5LTRiMzktOTFmZi0wYjMxZDM0MWExNDkifX0%3D" },
-      { name: "Experimental", icon: "🧪", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/ES8CoQF7K2VKioW3IR_IEWUBm_0EcYTDHPVzXXJ3KXX9Rg?e=th1DXu&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiIwNTlkOTg2Mi0xNTY5LTRiMzktOTFmZi0wYjMxZDM0MWExNDkifX0%3D" }
+      { name: "Maqam", icon: "🪕", audio: "MusicGen/musicgen_Analysis_Baseline_4.wav" },
+      { name: "Ambient", icon: "🌌", audio: "MusicGen/musicgen_Analysis_Baseline_4.wav" },
+      { name: "Experimental", icon: "🧪", audio: "MusicGen/musicgen_Analysis_Baseline_4.wav" }
     ]
   };
 
