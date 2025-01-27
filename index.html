@@ -98,37 +98,53 @@
       margin-bottom: 10px;
     }
 
-    .models-genres select,
-    .genres button {
+    .models-genres select {
       width: 100%;
       padding: 10px;
       font-size: 16px;
       border-radius: 25px;
       border: none;
       cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .models-genres select {
       background-color: #4caf50;
       color: white;
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease;
     }
 
     .models-genres select:hover {
       background-color: #66bb6a;
     }
 
-    .genres button {
-      background-color: #7b2cbf;
-      color: white;
-      margin: 5px 0;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    .genre-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
     }
 
-    .genres button:hover {
-      background-color: #9a4dff;
-      transform: scale(1.05);
+    .genre-card {
+      background: linear-gradient(135deg, #7b2cbf, #ff6a00);
+      color: white;
+      border-radius: 15px;
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .genre-card:hover {
+      transform: scale(1.1);
+      box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .genre-card i {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 5px;
+      color: #fff;
     }
 
     .generate-btn {
@@ -153,25 +169,6 @@
       background-color: #ff6666;
       transform: scale(1.1);
     }
-
-    footer {
-      background-color: #15162c;
-      color: #aaa;
-      text-align: center;
-      padding: 15px;
-      font-size: 14px;
-      margin-top: 40px;
-    }
-
-    footer a {
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
@@ -187,9 +184,9 @@
         <h4>Example Prompts:</h4>
         <div>
           <ul>
-            <li>🎵 <i>Imagine a traditional Hindustani Classical performance...</i></li>
-            <li>🎵 <i>Compose a soulful Hindustani Classical piece...</i></li>
-            <li>🎵 <i>Design a captivating Hindustani Classical composition...</i></li>
+            <li>🎵 <i>Imagine a traditional Hindustani Classical performance that brings together Sarangi, Lalat raga, Khayal form, and Madhya laya, flowing effortlessly.</i></li>
+            <li>🎵 <i>Compose a soulful Hindustani Classical piece that blends the rich timbre of Sarangi, Tabla, and Vilambit laya.</i></li>
+            <li>🎵 <i>Design a captivating Hindustani Classical composition where the soothing tones of Sarangi, Shree raga, Khayal form, and Vilambit laya explore new depths.</i></li>
           </ul>
         </div>
       </div>
@@ -208,8 +205,8 @@
 
       <div class="models-genres">
         <h3>Genre Playground:</h3>
-        <div id="genreButtons">
-          <!-- Genre buttons will be dynamically inserted here -->
+        <div id="genreButtons" class="genre-container">
+          <!-- Fancy genre cards will be dynamically inserted here -->
         </div>
       </div>
     </div>
@@ -218,33 +215,40 @@
   <div class="generate-btn">
     <button>Generate</button>
   </div>
-
-  <footer>
-    © 2025 Missing Melodies | <a href="#">Alice Lab @ Mohamed bin Zayed University of Artificial Intelligence</a>
-  </footer>
-
-  <script>
-    const genres = {
-      model1: ["Hindustani Classical", "Pop", "Jazz"],
-      model2: ["Folk", "Rock", "Electronic"],
-      model3: ["Maqam", "Ambient", "Experimental"]
-    };
-
-    function updateGenres() {
-      const model = document.getElementById("modelSelector").value;
-      const genreContainer = document.getElementById("genreButtons");
-      genreContainer.innerHTML = ""; // Clear existing genres
-
-      genres[model].forEach(genre => {
-        const button = document.createElement("button");
-        button.textContent = genre;
-        button.className = "genres button";
-        genreContainer.appendChild(button);
-      });
-    }
-
-    // Initialize genres for the first model
-    updateGenres();
-  </script>
 </body>
+<script>
+  const genres = {
+    model1: [
+      { name: "Hindustani Classical", icon: "🎻" },
+      { name: "Pop", icon: "🎤" },
+      { name: "Jazz", icon: "🎷" }
+    ],
+    model2: [
+      { name: "Folk", icon: "🎸" },
+      { name: "Rock", icon: "🎵" },
+      { name: "Electronic", icon: "🎹" }
+    ],
+    model3: [
+      { name: "Maqam", icon: "🪕" },
+      { name: "Ambient", icon: "🌌" },
+      { name: "Experimental", icon: "🧪" }
+    ]
+  };
+
+  function updateGenres() {
+    const model = document.getElementById("modelSelector").value;
+    const genreContainer = document.getElementById("genreButtons");
+    genreContainer.innerHTML = ""; // Clear existing genres
+
+    genres[model].forEach(genre => {
+      const card = document.createElement("div");
+      card.className = "genre-card";
+      card.innerHTML = `<i>${genre.icon}</i>${genre.name}`;
+      genreContainer.appendChild(card);
+    });
+  }
+
+  // Initialize genres for the first model
+  updateGenres();
+</script>
 </html>
