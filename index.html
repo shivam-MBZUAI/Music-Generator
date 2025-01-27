@@ -29,14 +29,6 @@
       text-shadow: 0px 0px 10px #ffffff, 0px 0px 20px #ff6a00;
     }
 
-    .tagline {
-      text-align: center;
-      font-size: 18px;
-      font-weight: 400;
-      margin-top: -10px;
-      color: #ddd;
-    }
-
     .container {
       display: flex;
       justify-content: space-between;
@@ -58,93 +50,8 @@
       resize: none;
     }
 
-    .examples {
-      margin-top: 15px;
-    }
-
-    .examples h4 {
-      font-size: 16px;
-      color: #ddd;
-      margin-bottom: 10px;
-    }
-
-    .examples div {
-      background-color: #4a6fa5;
-      padding: 10px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .examples ul {
-      font-size: 14px;
-      color: #fff;
-      margin: 0;
-      padding-left: 20px;
-      list-style: none;
-    }
-
-    .examples ul li {
-      margin-bottom: 10px;
-    }
-
     .right-section {
       width: 35%;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .models-genres h3 {
-      margin-bottom: 10px;
-    }
-
-    .models-genres select {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 25px;
-      border: none;
-      cursor: pointer;
-      background-color: #4caf50;
-      color: white;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s ease;
-    }
-
-    .models-genres select:hover {
-      background-color: #66bb6a;
-    }
-
-    .genre-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
-    }
-
-    .genre-card {
-      background: linear-gradient(135deg, #7b2cbf, #ff6a00);
-      color: white;
-      border-radius: 15px;
-      padding: 10px 20px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: bold;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-    }
-
-    .genre-card:hover {
-      transform: scale(1.1);
-      box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
-    }
-
-    .genre-card i {
-      display: block;
-      font-size: 20px;
-      margin-bottom: 5px;
-      color: #fff;
     }
 
     .generate-btn {
@@ -169,86 +76,140 @@
       background-color: #ff6666;
       transform: scale(1.1);
     }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .modal-content audio {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .timer {
+      font-size: 16px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .close-btn {
+      background-color: #ff4d4d;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .close-btn:hover {
+      background-color: #ff6666;
+    }
   </style>
 </head>
 <body>
   <header>🎵 Missing Melodies 🎶</header>
-  <div class="tagline">Bringing the world's hidden sounds to the forefront</div>
 
   <div class="container">
-    <!-- Left Section -->
     <div class="prompt-box">
       <h3>Inspiration Hub:</h3>
       <textarea placeholder="Unleash your creative ideas here..."></textarea>
-      <div class="examples">
-        <h4>Example Prompts:</h4>
-        <div>
-          <ul>
-            <li>🎵 <i>Imagine a traditional Hindustani Classical performance that brings together Sarangi, Lalat raga, Khayal form, and Madhya laya, flowing effortlessly.</i></li>
-            <li>🎵 <i>Compose a soulful Hindustani Classical piece that blends the rich timbre of Sarangi, Tabla, and Vilambit laya.</i></li>
-            <li>🎵 <i>Design a captivating Hindustani Classical composition where the soothing tones of Sarangi, Shree raga, Khayal form, and Vilambit laya explore new depths.</i></li>
-          </ul>
-        </div>
-      </div>
     </div>
 
-    <!-- Right Section -->
     <div class="right-section">
-      <div class="models-genres">
-        <h3>Model Selector:</h3>
-        <select id="modelSelector" onchange="updateGenres()">
-          <option value="model1">MusicGen</option>
-          <option value="model2">Mustango</option>
-          <option value="model3">Mousai</option>
-        </select>
-      </div>
-
-      <div class="models-genres">
-        <h3>Genre Playground:</h3>
-        <div id="genreButtons" class="genre-container">
-          <!-- Fancy genre cards will be dynamically inserted here -->
-        </div>
-      </div>
+      <h3>Model Selector:</h3>
+      <select>
+        <option value="model1">MusicGen</option>
+        <option value="model2">Mustango</option>
+        <option value="model3">Mousai</option>
+      </select>
     </div>
   </div>
 
   <div class="generate-btn">
-    <button>Generate</button>
+    <button id="generateButton">Generate</button>
   </div>
-</body>
-<script>
-  const genres = {
-    model1: [
-      { name: "Hindustani Classical", icon: "🎻" },
-      { name: "Pop", icon: "🎤" },
-      { name: "Jazz", icon: "🎷" }
-    ],
-    model2: [
-      { name: "Folk", icon: "🎸" },
-      { name: "Rock", icon: "🎵" },
-      { name: "Electronic", icon: "🎹" }
-    ],
-    model3: [
-      { name: "Maqam", icon: "🪕" },
-      { name: "Ambient", icon: "🌌" },
-      { name: "Experimental", icon: "🧪" }
-    ]
-  };
 
-  function updateGenres() {
-    const model = document.getElementById("modelSelector").value;
-    const genreContainer = document.getElementById("genreButtons");
-    genreContainer.innerHTML = ""; // Clear existing genres
+  <!-- Modal for Audio Player -->
+  <div class="modal" id="audioModal">
+    <div class="modal-content">
+      <h3>🎵 Now Playing Your Generated Music</h3>
+      <audio id="audioPlayer" controls>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+      <div class="timer" id="timer">Elapsed Time: 00:00</div>
+      <button class="close-btn" id="closeModalButton">Close</button>
+    </div>
+  </div>
 
-    genres[model].forEach(genre => {
-      const card = document.createElement("div");
-      card.className = "genre-card";
-      card.innerHTML = `<i>${genre.icon}</i>${genre.name}`;
-      genreContainer.appendChild(card);
+  <script>
+    const generateButton = document.getElementById("generateButton");
+    const audioModal = document.getElementById("audioModal");
+    const audioPlayer = document.getElementById("audioPlayer");
+    const timer = document.getElementById("timer");
+    const closeModalButton = document.getElementById("closeModalButton");
+
+    let timerInterval;
+
+    // Show modal and play audio
+    generateButton.addEventListener("click", () => {
+      audioModal.style.display = "flex";
+      audioPlayer.play();
+      startTimer();
     });
-  }
 
-  // Initialize genres for the first model
-  updateGenres();
-</script>
+    // Close modal
+    closeModalButton.addEventListener("click", () => {
+      audioModal.style.display = "none";
+      audioPlayer.pause();
+      audioPlayer.currentTime = 0;
+      stopTimer();
+    });
+
+    // Timer functionality
+    function startTimer() {
+      let seconds = 0;
+      timerInterval = setInterval(() => {
+        seconds++;
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        timer.textContent = `Elapsed Time: ${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+      timer.textContent = "Elapsed Time: 00:00";
+    }
+  </script>
+</body>
 </html>
