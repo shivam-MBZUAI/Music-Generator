@@ -6,25 +6,17 @@
   <title>Missing Melodies</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-body {
-  font-family: 'Poppins', sans-serif;
-  background-image: url('https://github.com/shivam-MBZUAI/Music-Generator/blob/main/Image-Background.jpg'); /* Replace with your hosted image URL */
-  background-size: cover; /* Makes the image cover the entire viewport */
-  background-repeat: no-repeat; /* Prevents the image from repeating */
-  background-attachment: fixed; /* Keeps the image fixed during scrolling */
-  background-position: center center; /* Centers the image */
-  background-color: #2e026d; /* Fallback color */
-  color: white;
-  margin: 0;
-  padding: 0;
-}
-
-
-
-    @keyframes gradientAnimation {
-      0% { background: linear-gradient(120deg, #6a11cb, #2575fc); }
-      50% { background: linear-gradient(120deg, #ff6a00, #ee0979); }
-      100% { background: linear-gradient(120deg, #6a11cb, #2575fc); }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-image: url('https://github.com/shivam-MBZUAI/Music-Generator/blob/main/Image-Background.jpg'); /* Replace with your hosted image URL */
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center center;
+      background-color: #2e026d; /* Fallback color */
+      color: white;
+      margin: 0;
+      padding: 0;
     }
 
     header {
@@ -146,11 +138,11 @@ body {
       box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
     }
 
-    .genre-card i {
-      display: block;
-      font-size: 20px;
-      margin-bottom: 5px;
-      color: #fff;
+    .genre-card.selected {
+      background: linear-gradient(135deg, #4caf50, #8bc34a); /* Highlighted green */
+      color: white;
+      box-shadow: 0px 6px 15px rgba(0, 255, 0, 0.5); /* Green glow effect */
+      transform: scale(1.1);
     }
 
     .generate-btn {
@@ -182,7 +174,6 @@ body {
   <div class="tagline">Bringing the world's hidden sounds to the forefront</div>
 
   <div class="container">
-    <!-- Left Section -->
     <div class="prompt-box">
       <h3>Inspiration Hub:</h3>
       <textarea placeholder="Unleash your creative ideas here..."></textarea>
@@ -190,14 +181,13 @@ body {
         <h4>Example Prompts:</h4>
         <div>
           <ul>
-            <li>🎵 <i>Imagine a traditional Hindustani Classical performance that brings together Saarangi, Lalat raga, Khayal form, Madhya laya, flowing effortlessly.</i></li>
-            <li>🎵 <i>Compose a soulful Hindustani Classical piece that blends the rich timbre of Saarangi, Tabla, Vilambit laya.</i></li>
+            <li>🎵 Imagine a traditional Hindustani Classical performance with Saarangi and Lalat raga.</li>
+            <li>🎵 Compose a soulful Hindustani Classical piece blending Tabla and Vilambit laya.</li>
           </ul>
         </div>
       </div>
     </div>
 
-    <!-- Right Section -->
     <div class="right-section">
       <div class="models-genres">
         <h3>Model Selector:</h3>
@@ -210,91 +200,79 @@ body {
 
       <div class="models-genres">
         <h3>Genre Adapters:</h3>
-        <div id="genreButtons" class="genre-container">
-          <!-- Fancy genre cards will be dynamically inserted here -->
-        </div>
+        <div id="genreButtons" class="genre-container"></div>
       </div>
     </div>
   </div>
 
   <div class="generate-btn">
-  <button id="generateButton">Generate</button>
-  <!-- Audio Player Section -->
-  <div id="audioPlayerSection" style="display: none; margin-top: 20px; text-align: center;">
-    <h4 style="font-size: 18px; margin-bottom: 10px; color: #ddd;">🎵 Generated Audio:</h4>
-    <audio id="audioPlayer" controls style="width: 100%; max-width: 400px;">
-      <source src="https://shivam-MBZUAI.github.io/Music-Generator/MusicGen/musicgen_Analysis_Baseline_1.wav" type="audio/wav">
-      Your browser does not support the audio element.
-    </audio>
+    <button id="generateButton">Generate</button>
+    <div id="audioPlayerSection" style="display: none; margin-top: 20px; text-align: center;">
+      <h4 style="font-size: 18px; margin-bottom: 10px; color: #ddd;">🎵 Generated Audio:</h4>
+      <audio id="audioPlayer" controls style="width: 100%; max-width: 400px;">
+        <source src="" type="audio/wav">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
   </div>
-</div>
 
-</body>
-<script>
-  // Data for models, genres, and corresponding audio URLs
-  const genres = {
-    model1: [
-      { name: "Hindustani Classical", icon: "🎻", audio: "MusicGen/musicgen_Analysis_Baseline_1.wav" },
-      { name: "Maqam", icon: "🎤", audio: "MusicGen/musicgen_Analysis_Baseline_3.wav" },
-      { name: "Jazz", icon: "🎷", audio: "MusicGen/musicgen_Analysis_Baseline_4.wav" }
-    ],
-    model2: [
-      { name: "Folk", icon: "🎸", audio: "MusicGen/musicgen_Analysis_Baseline_1.wav" },
-      { name: "Rock", icon: "🎵", audio: "MusicGen/musicgen_Analysis_Baseline_3.wav" },
-      { name: "Electronic", icon: "🎹", audio: "MusicGen/musicgen_Analysis_Baseline_4.wav" }
-    ],
-    model3: [
-      { name: "Maqam", icon: "🪕", audio: "MusicGen/musicgen_Analysis_Baseline_1.wav" },
-      { name: "Ambient", icon: "🌌", audio: "MusicGen/musicgen_Analysis_Baseline_3.wav" },
-      { name: "Experimental", icon: "🧪", audio: "MusicGen/musicgen_Analysis_Baseline_4.wav" }
-    ]
-  };
+  <script>
+    const genres = {
+      model1: [
+        { name: "Hindustani Classical", icon: "🎻", audio: "MusicGen/musicgen_Analysis_Baseline_1.wav" },
+        { name: "Maqam", icon: "🎤", audio: "MusicGen/musicgen_Analysis_Baseline_3.wav" }
+      ],
+      model2: [
+        { name: "Folk", icon: "🎸", audio: "MusicGen/musicgen_Analysis_Baseline_1.wav" },
+        { name: "Rock", icon: "🎵", audio: "MusicGen/musicgen_Analysis_Baseline_3.wav" }
+      ]
+    };
 
-  // Update genres dynamically based on selected model
-  function updateGenres() {
-    const model = document.getElementById("modelSelector").value;
-    const genreContainer = document.getElementById("genreButtons");
-    genreContainer.innerHTML = ""; // Clear existing genres
+    let selectedGenreCard = null;
+    let selectedAudio = "";
 
-    genres[model].forEach((genre, index) => {
-      const card = document.createElement("div");
-      card.className = "genre-card";
-      card.innerHTML = `<i>${genre.icon}</i>${genre.name}`;
-      card.setAttribute("data-audio", genre.audio); // Attach audio URL as a data attribute
-      card.onclick = () => selectGenre(index); // Set the genre when clicked
-      genreContainer.appendChild(card);
-    });
-  }
+    function updateGenres() {
+      const model = document.getElementById("modelSelector").value;
+      const genreContainer = document.getElementById("genreButtons");
+      genreContainer.innerHTML = "";
+      selectedGenreCard = null;
+      selectedAudio = "";
 
-  // Initialize genres for the first model
-  updateGenres();
-
-  let selectedAudio = ""; // To store the selected audio URL
-
-  // Handle genre selection
-  function selectGenre(index) {
-    const model = document.getElementById("modelSelector").value;
-    const selectedGenre = genres[model][index];
-    selectedAudio = selectedGenre.audio; // Set the selected audio URL
-    console.log("Selected Genre:", selectedGenre.name, "Audio:", selectedAudio);
-  }
-
-  // Handle Generate button click
-  const generateButton = document.getElementById("generateButton");
-  const audioPlayerSection = document.getElementById("audioPlayerSection");
-  const audioSource = document.getElementById("audioPlayer").querySelector("source");
-  const audioPlayer = document.getElementById("audioPlayer");
-
-  generateButton.addEventListener("click", () => {
-    if (selectedAudio) {
-      audioSource.src = selectedAudio; // Set the audio source dynamically
-      audioPlayer.load(); // Reload the audio element with the new source
-      audioPlayerSection.style.display = "block"; // Show the audio player
-      audioPlayer.play(); // Automatically play the audio
-    } else {
-      alert("Please select a genre first!"); // Prompt user if no genre is selected
+      genres[model].forEach((genre, index) => {
+        const card = document.createElement("div");
+        card.className = "genre-card";
+        card.innerHTML = `<i>${genre.icon}</i>${genre.name}`;
+        card.onclick = () => selectGenre(card, genre.audio);
+        genreContainer.appendChild(card);
+      });
     }
-  });
-</script>
 
+    function selectGenre(card, audio) {
+      if (selectedGenreCard) {
+        selectedGenreCard.classList.remove("selected");
+      }
+      card.classList.add("selected");
+      selectedGenreCard = card;
+      selectedAudio = audio;
+    }
+
+    const generateButton = document.getElementById("generateButton");
+    const audioPlayerSection = document.getElementById("audioPlayerSection");
+    const audioPlayer = document.getElementById("audioPlayer");
+    const audioSource = audioPlayer.querySelector("source");
+
+    generateButton.addEventListener("click", () => {
+      if (selectedAudio) {
+        audioSource.src = selectedAudio;
+        audioPlayer.load();
+        audioPlayerSection.style.display = "block";
+        audioPlayer.play();
+      } else {
+        alert("Please select a genre first!");
+      }
+    });
+
+    updateGenres();
+  </script>
+</body>
 </html>
