@@ -221,7 +221,7 @@
   <div id="audioPlayerSection" style="display: none; margin-top: 20px; text-align: center;">
     <h4 style="font-size: 18px; margin-bottom: 10px; color: #ddd;">🎵 Generated Audio:</h4>
     <audio id="audioPlayer" controls style="width: 100%; max-width: 400px;">
-      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+      <source src="https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/EQw2iMyeqGhNinh9Av2eNh4B0dFLHI0v1x2XNXyDm8bTmg?e=B6jYGh&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiJmNDNlYzM1MC1hOThiLTQwMzAtOTJkMi1mYWZlYmE1MjgzMzEifX0%3D" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
   </div>
@@ -229,49 +229,70 @@
 
 </body>
 <script>
+  // Data for models, genres, and corresponding audio URLs
   const genres = {
     model1: [
-      { name: "Hindustani Classical", icon: "🎻" },
-      { name: "Maqam", icon: "🎤" },
-      { name: "Jazz", icon: "🎷" }
+      { name: "Hindustani Classical", icon: "🎻", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/EQw2iMyeqGhNinh9Av2eNh4B0dFLHI0v1x2XNXyDm8bTmg?e=B6jYGh&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiJmNDNlYzM1MC1hOThiLTQwMzAtOTJkMi1mYWZlYmE1MjgzMzEifX0%3D" },
+      { name: "Maqam", icon: "🎤", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/EQw2iMyeqGhNinh9Av2eNh4B0dFLHI0v1x2XNXyDm8bTmg?e=B6jYGh&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiJmNDNlYzM1MC1hOThiLTQwMzAtOTJkMi1mYWZlYmE1MjgzMzEifX0%3D" },
+      { name: "Jazz", icon: "🎷", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/EQw2iMyeqGhNinh9Av2eNh4B0dFLHI0v1x2XNXyDm8bTmg?e=B6jYGh&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiJmNDNlYzM1MC1hOThiLTQwMzAtOTJkMi1mYWZlYmE1MjgzMzEifX0%3D" }
     ],
     model2: [
-      { name: "Folk", icon: "🎸" },
-      { name: "Rock", icon: "🎵" },
-      { name: "Electronic", icon: "🎹" }
+      { name: "Folk", icon: "🎸", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/ERl9jgn9eSpEoFJiXR-iJ_ABYN5LGYEEuiVviiTBjt_m2w?e=G90El5&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiJjM2EzOTkxMi0xNjk3LTRhNzktYWYwZS02YmJkMjE3MzJjZDMifX0%3D" },
+      { name: "Rock", icon: "🎵", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/ERl9jgn9eSpEoFJiXR-iJ_ABYN5LGYEEuiVviiTBjt_m2w?e=G90El5&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiJjM2EzOTkxMi0xNjk3LTRhNzktYWYwZS02YmJkMjE3MzJjZDMifX0%3D" },
+      { name: "Electronic", icon: "🎹", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/ERl9jgn9eSpEoFJiXR-iJ_ABYN5LGYEEuiVviiTBjt_m2w?e=G90El5&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiJjM2EzOTkxMi0xNjk3LTRhNzktYWYwZS02YmJkMjE3MzJjZDMifX0%3D" }
     ],
     model3: [
-      { name: "Maqam", icon: "🪕" },
-      { name: "Ambient", icon: "🌌" },
-      { name: "Experimental", icon: "🧪" }
+      { name: "Maqam", icon: "🪕", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/ES8CoQF7K2VKioW3IR_IEWUBm_0EcYTDHPVzXXJ3KXX9Rg?e=th1DXu&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiIwNTlkOTg2Mi0xNTY5LTRiMzktOTFmZi0wYjMxZDM0MWExNDkifX0%3D" },
+      { name: "Ambient", icon: "🌌", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/ES8CoQF7K2VKioW3IR_IEWUBm_0EcYTDHPVzXXJ3KXX9Rg?e=th1DXu&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiIwNTlkOTg2Mi0xNTY5LTRiMzktOTFmZi0wYjMxZDM0MWExNDkifX0%3D" },
+      { name: "Experimental", icon: "🧪", audio: "https://mbzuaiac-my.sharepoint.com/:u:/g/personal/shivam_chauhan_mbzuai_ac_ae/ES8CoQF7K2VKioW3IR_IEWUBm_0EcYTDHPVzXXJ3KXX9Rg?e=th1DXu&nav=eyJwbGF5YmFja09wdGlvbnMiOnt9LCJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbE1vZGUiOiJtaXMiLCJyZWZlcnJhbFZpZXciOiJwb3N0cm9sbC1jb3B5bGluayIsInJlZmVycmFsUGxheWJhY2tTZXNzaW9uSWQiOiIwNTlkOTg2Mi0xNTY5LTRiMzktOTFmZi0wYjMxZDM0MWExNDkifX0%3D" }
     ]
   };
 
+  // Update genres dynamically based on selected model
   function updateGenres() {
     const model = document.getElementById("modelSelector").value;
     const genreContainer = document.getElementById("genreButtons");
     genreContainer.innerHTML = ""; // Clear existing genres
 
-    genres[model].forEach(genre => {
+    genres[model].forEach((genre, index) => {
       const card = document.createElement("div");
       card.className = "genre-card";
       card.innerHTML = `<i>${genre.icon}</i>${genre.name}`;
+      card.setAttribute("data-audio", genre.audio); // Attach audio URL as a data attribute
+      card.onclick = () => selectGenre(index); // Set the genre when clicked
       genreContainer.appendChild(card);
     });
   }
 
   // Initialize genres for the first model
   updateGenres();
-  
-  // New JavaScript for Audio Player
+
+  let selectedAudio = ""; // To store the selected audio URL
+
+  // Handle genre selection
+  function selectGenre(index) {
+    const model = document.getElementById("modelSelector").value;
+    const selectedGenre = genres[model][index];
+    selectedAudio = selectedGenre.audio; // Set the selected audio URL
+    console.log("Selected Genre:", selectedGenre.name, "Audio:", selectedAudio);
+  }
+
+  // Handle Generate button click
   const generateButton = document.getElementById("generateButton");
   const audioPlayerSection = document.getElementById("audioPlayerSection");
+  const audioSource = document.getElementById("audioPlayer").querySelector("source");
   const audioPlayer = document.getElementById("audioPlayer");
 
-  // Show the audio player when "Generate" is clicked
   generateButton.addEventListener("click", () => {
-    audioPlayerSection.style.display = "block"; // Make the audio player visible
-    audioPlayer.play(); // Automatically start playing the audio
+    if (selectedAudio) {
+      audioSource.src = selectedAudio; // Set the audio source dynamically
+      audioPlayer.load(); // Reload the audio element with the new source
+      audioPlayerSection.style.display = "block"; // Show the audio player
+      audioPlayer.play(); // Automatically play the audio
+    } else {
+      alert("Please select a genre first!"); // Prompt user if no genre is selected
+    }
   });
 </script>
+
 </html>
