@@ -4,286 +4,335 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Missing Melodies</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet" />
-
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+    rel="stylesheet"
+  />
   <style>
-    /* ============ Global Styles ============ */
+    /* ======== Global Styles ======== */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(120deg, #1a0033, #330066, #4b0082);
-      background-attachment: fixed;
-      color: white;
-      overflow-x: hidden; /* No horizontal scrollbar */
-    }
-
-    a {
+      /* Lighter, more colorful gradient */
+      background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
       color: #fff;
-      text-decoration: none;
+      overflow-x: hidden;
+      min-height: 100vh;
     }
 
-    /* ============ Animated Header Wave ============ */
-    .hero-section {
-      position: relative;
-      width: 100%;
-      height: 180px;
-      background: linear-gradient(120deg, #1a0033, #330066 50%, #4b0082);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    a { color: #fff; text-decoration: none; }
+
+    /* ======== Header & Tagline ======== */
+    header {
       text-align: center;
-      overflow: hidden;
+      padding: 40px 20px 10px; /* Less bottom padding to bring tagline close */
     }
 
-    .hero-section h1 {
-      font-size: 48px;
+    header h1 {
       font-weight: 600;
-      font-family: 'Playfair Display', serif;
-      text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.9), 0px 0px 25px rgba(255, 105, 180, 0.7);
-      z-index: 2;
-      position: relative;
+      font-size: 48px;
+      margin-bottom: 0;
+      text-shadow: 0 0 10px rgba(255,255,255,0.7);
     }
 
-    .hero-wave {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 200%;
-      height: 100px;
-      background: url('https://svgshare.com/i/uCu.svg') repeat-x;
-      background-size: 50% 100px;
-      animation: waveAnimation 15s linear infinite;
-      opacity: 0.3;
-    }
-
-    @keyframes waveAnimation {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-50%);
-      }
-    }
-
-    /* Tagline under the header */
     .tagline {
-      text-align: center;
-      margin-top: 10px;
-      font-size: 18px;
+      margin-top: 6px; /* small gap between heading & tagline */
+      font-size: 16px;
       font-weight: 300;
-      color: #ccc;
       font-style: italic;
-      margin-bottom: 30px;
+      opacity: 0.9;
     }
 
-    /* ============ Main Container ============ */
-    .container {
+    /* ======== Main Container ======== */
+    .main-container {
       width: 90%;
       max-width: 1200px;
-      margin: 0 auto;
+      margin: 20px auto 40px;
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
-      justify-content: space-between;
     }
 
-    /* ============ Left (Prompt Box) ============ */
-    .left-section {
-      flex: 1 1 55%;
-      min-width: 300px;
-    }
-
-    .prompt-box h3 {
-      font-size: 22px;
+    /* ======== Prompt Section ======== */
+    .prompt-section {
+      flex: 1 1 100%;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
       margin-bottom: 10px;
     }
-
-    .prompt-box textarea {
-      width: 100%;
-      height: 140px;
-      border-radius: 15px;
-      border: none;
-      padding: 15px;
-      font-size: 16px;
-      background: rgba(255, 255, 255, 0.2); /* Semi-transparent */
-      box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
-      color: white;
-      outline: none;
-      transition: box-shadow 0.3s ease;
-    }
-
-    .prompt-box textarea::placeholder {
-      color: #ddd;
-    }
-
-    .prompt-box textarea:focus {
-      box-shadow: 0px 4px 20px rgba(255, 255, 255, 0.4);
-    }
-
-    .examples {
-      margin-top: 15px;
-    }
-
-    .examples h4 {
-      font-size: 16px;
-      color: #ddd;
-      margin-bottom: 10px;
-    }
-
-    .examples div {
-      background: linear-gradient(135deg, #3366cc, #6699ff);
-      padding: 12px;
-      border-radius: 15px;
-      box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3);
-    }
-
-    .examples ul {
-      font-size: 16px;
-      color: white;
-      list-style-type: none;
-      padding: 0;
-    }
-
-    .examples ul li {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .examples ul li::before {
-      content: "🎶";
-      font-size: 18px;
-    }
-
-    /* ============ Right (Model & Genre Section) ============ */
-    .right-section {
-      flex: 1 1 40%;
-      min-width: 250px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .models-genres h3 {
+    .prompt-section h2 {
       font-size: 20px;
       margin-bottom: 10px;
     }
-
-    .models-genres select {
+    .prompt-box {
+      position: relative;
+      margin-bottom: 15px;
+    }
+    .prompt-box textarea {
       width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 25px;
+      height: 120px;
+      border-radius: 12px;
       border: none;
-      cursor: pointer;
-      background-color: #4caf50;
-      color: white;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s ease;
+      padding: 15px;
+      font-size: 15px;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.2);
       outline: none;
+      resize: vertical;
+      transition: box-shadow 0.3s ease;
+    }
+    .prompt-box textarea::placeholder {
+      color: #f2f2f2;
+    }
+    .prompt-box textarea:focus {
+      box-shadow: 0 0 5px rgba(255,255,255,0.4);
     }
 
-    .models-genres select:hover {
+    .examples {
+      margin-top: 10px;
+      background-color: rgba(255,255,255,0.15);
+      padding: 12px;
+      border-radius: 10px;
+    }
+    .examples h4 {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .examples ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .examples li {
+      margin-bottom: 6px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .examples li::before {
+      content: "🎶";
+    }
+
+    /* ======== Selections Section (Model & Adapters) ======== */
+    .selection-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .selection-box {
+      flex: 1 1 250px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+
+    .selection-box h3 {
+      margin-bottom: 8px;
+      font-size: 16px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Model Selector */
+    .selection-box select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      font-size: 14px;
+      font-weight: 500;
+      background-color: #43a047; /* mid-green */
+      color: #fff;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+    }
+    .selection-box select:hover {
       background-color: #66bb6a;
     }
 
+    /* Genre Adapters */
     .genre-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
     }
 
     .genre-card {
-      background: linear-gradient(135deg, rgba(255, 105, 180, 0.8), rgba(255, 69, 0, 0.8));
-      color: white;
-      border-radius: 25px;
-      padding: 12px 24px;
-      text-align: center;
-      font-size: 16px;
-      font-weight: bold;
-      backdrop-filter: blur(10px); /* Glass effect */
-      transition: transform 0.3s, box-shadow 0.3s;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 6px;
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      background: #e53935; /* default red-ish */
+      border-radius: 20px;
+      color: #fff;
       cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
     }
-
     .genre-card:hover {
-      transform: scale(1.15);
-      box-shadow: 0px 6px 15px rgba(255, 69, 0, 0.8);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
+    /* Selected Genre changes color to a highlight */
     .genre-card.selected {
-      background: linear-gradient(135deg, #4caf50, #8bc34a); /* Highlighted green */
+      background: #6cc070; /* a green highlight */
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,255,0,0.35);
+    }
+
+    /* ======== Generate Button ======== */
+    .generate-btn {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .generate-btn button {
+      background: linear-gradient(135deg, #FF9800, #FF5722);
       color: white;
-      box-shadow: 0px 6px 15px rgba(0, 255, 0, 0.5);
-      transform: scale(1.1);
+      padding: 14px 40px;
+      border: none;
+      border-radius: 24px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0px 4px 10px rgba(255, 152, 0, 0.4);
+      transition: all 0.3s ease;
+      outline: none;
+    }
+    .generate-btn button:hover {
+      background: linear-gradient(135deg, #FF5722, #FF9800);
+      transform: scale(1.05);
+      box-shadow: 0px 6px 14px rgba(255,87,34,0.5);
     }
 
-    /* ============ Advanced Settings ============ */
-    .advanced-settings {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      padding: 15px;
-      margin-top: 15px;
-      box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
-      transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    /* ======== Output Section (Audio + Spectrogram) ======== */
+    .output-section {
+      display: none; /* hidden until user generates */
+      background: rgba(255,255,255,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      margin-top: 10px;
     }
-
-    .toggle-advanced {
+    .output-title {
       font-size: 16px;
       margin-bottom: 10px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .audio-display {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Audio player nicely styled */
+    audio {
+      max-width: 320px;
+      width: 100%;
+      outline: none;
+      border-radius: 8px;
+    }
+
+    /* Placeholder spectrogram container */
+    .spectrogram-container {
+      flex: 1 1 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0,0,0,0.2);
+      border-radius: 12px;
+      min-height: 160px;
+      position: relative;
+      overflow: hidden;
+    }
+    .spectrogram-container canvas {
+      width: 100%;
+      height: 100%;
+      background: #222; /* darkest bg for contrast */
+      display: block;
+    }
+    .spectrogram-placeholder-text {
+      position: absolute;
+      font-size: 14px;
+      color: #aaa;
+      text-align: center;
+    }
+
+    /* ======== Advanced Settings Toggle (Optional) ======== */
+    .advanced-settings {
+      background: rgba(0,0,0,0.2);
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    }
+    .toggle-advanced {
+      font-size: 14px;
       cursor: pointer;
       font-weight: 600;
+      margin-bottom: 8px;
       display: inline-block;
     }
-
     .toggle-advanced:hover {
-      text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+      text-shadow: 0 0 5px rgba(255,255,255,0.5);
     }
-
-    /* Hidden advanced section by default */
     #advancedSection {
       max-height: 0;
       overflow: hidden;
       opacity: 0;
-      transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
     }
-
     #advancedSection.open {
-      max-height: 500px; /* Just a large enough value to fit content */
+      max-height: 500px;
       opacity: 1;
     }
-
     .setting {
       margin-bottom: 10px;
       display: flex;
       align-items: center;
       gap: 10px;
     }
-
     .setting label {
-      min-width: 80px;
+      min-width: 60px;
       font-size: 14px;
-      color: #ddd;
     }
-
     .setting input[type="range"] {
       flex: 1;
     }
-
     .setting select {
-      padding: 5px 10px;
+      padding: 6px 10px;
       border-radius: 8px;
       border: none;
       outline: none;
@@ -293,147 +342,77 @@
       cursor: pointer;
     }
 
-    /* ============ Generate Button & Audio Player ============ */
-    .generate-btn {
-      text-align: center;
-      margin-top: 30px;
-    }
-
-    .generate-btn button {
-      background: linear-gradient(135deg, #ff4d4d, #ff6600);
-      color: white;
-      padding: 15px 50px;
-      border: none;
-      border-radius: 30px;
-      font-size: 20px;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0px 4px 10px rgba(255, 77, 77, 0.6);
-      transition: all 0.3s ease;
-      margin-bottom: 20px;
-      outline: none;
-    }
-
-    .generate-btn button:hover {
-      background: linear-gradient(135deg, #ff6600, #ff4d4d);
-      transform: scale(1.1);
-      box-shadow: 0px 6px 15px rgba(255, 140, 0, 0.8);
-    }
-
-    #audioPlayerSection {
-      display: none;
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    #audioPlayerSection h4 {
-      font-size: 18px;
-      margin-bottom: 10px;
-      color: #ddd;
-    }
-
-    #audioPlayer {
-      width: 100%;
-      max-width: 400px;
-    }
-
-    /* ============ Footer ============ */
+    /* ======== Footer ======== */
     footer {
-      margin-top: 40px;
-      background: rgba(0,0,0,0.2);
-      backdrop-filter: blur(5px);
-      padding: 20px;
       text-align: center;
+      margin: 20px 0;
+      color: #fff;
+      opacity: 0.9;
       font-size: 14px;
     }
 
-    .footer-links {
-      margin-bottom: 10px;
-    }
-
-    .footer-links a {
-      margin: 0 10px;
-      font-weight: 300;
-      transition: color 0.3s ease;
-    }
-
-    .footer-links a:hover {
-      color: #ffcc00;
-    }
-
-    .footer-copy {
-      color: #aaa;
-    }
-
-    /* ============ Responsive Tweaks ============ */
+    /* ======== Responsive Tweaks ======== */
     @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        align-items: center;
-      }
-      .left-section, .right-section {
-        flex: 1 1 100%;
-        min-width: unset;
-      }
-      .hero-section h1 {
+      header h1 {
         font-size: 36px;
       }
+      .audio-display {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      audio {
+        max-width: 100%;
+      }
     }
-
   </style>
 </head>
 <body>
-  <!-- ============ Hero Header ============ -->
-  <section class="hero-section">
+  <!-- ======== Header ======== -->
+  <header>
     <h1>🎵 Missing Melodies 🎶</h1>
-    <div class="hero-wave"></div>
-  </section>
+    <div class="tagline">Bringing the world's hidden sounds to the forefront</div>
+  </header>
 
-  <div class="tagline">Bringing the world's hidden sounds to the forefront</div>
-
-  <!-- ============ Main Content ============ -->
-  <div class="container">
-    <!-- ============ Left Section (Prompt) ============ -->
-    <div class="left-section">
+  <!-- ======== Main Content ======== -->
+  <div class="main-container">
+    <!-- Prompt Section -->
+    <div class="prompt-section">
+      <h2>Inspiration Hub:</h2>
       <div class="prompt-box">
-        <h3>Inspiration Hub:</h3>
-        <textarea placeholder="Unleash your creative ideas here..."></textarea>
+        <textarea id="promptInput" placeholder="Enter your creative prompt here..."></textarea>
+      </div>
+      <div class="examples">
+        <h4>Example Prompts:</h4>
+        <ul>
+          <li>Imagine a traditional Hindustani Classical performance with Sarangi and Lalat raga.</li>
+          <li>Compose a soulful Hindustani Classical piece blending Tabla and Vilambit laya.</li>
+        </ul>
+      </div>
 
-        <!-- Example prompts -->
-        <div class="examples">
-          <h4>Example Prompts:</h4>
-          <div>
-            <ul>
-              <li>Imagine a traditional Hindustani Classical performance with Sarangi and Lalat raga.</li>
-              <li>Compose a soulful Hindustani Classical piece blending Tabla and Vilambit laya.</li>
-            </ul>
-          </div>
+      <!-- Selection Row: Model & Genre -->
+      <div class="selection-container">
+        <!-- Model Selector -->
+        <div class="selection-box">
+          <h3>Model Selector:</h3>
+          <select id="modelSelector" onchange="updateGenres()">
+            <option value="model1">MusicGen</option>
+            <option value="model2">Mustango</option>
+            <option value="model3">Mousai</option>
+          </select>
+        </div>
+
+        <!-- Genre Adapters -->
+        <div class="selection-box">
+          <h3>Genre Adapters:</h3>
+          <div id="genreButtons" class="genre-container"></div>
         </div>
       </div>
-    </div>
 
-    <!-- ============ Right Section (Model + Genre + Advanced Settings) ============ -->
-    <div class="right-section">
-      <!-- Model Selector -->
-      <div class="models-genres">
-        <h3>Model Selector:</h3>
-        <select id="modelSelector" onchange="updateGenres()">
-          <option value="model1">MusicGen</option>
-          <option value="model2">Mustango</option>
-          <option value="model3">Mousai</option>
-        </select>
-      </div>
-
-      <!-- Genre Adapters -->
-      <div class="models-genres">
-        <h3>Genre Adapters:</h3>
-        <div id="genreButtons" class="genre-container"></div>
-      </div>
-
-      <!-- Advanced Settings -->
+      <!-- Advanced Settings (Optional) -->
       <div class="advanced-settings">
         <div class="toggle-advanced" onclick="toggleAdvancedSettings()">Advanced Settings ⚙️</div>
-        <div id="advancedSection" class="advanced-section">
+        <div id="advancedSection">
           <div class="setting">
             <label for="bpmSlider">BPM:</label>
             <input type="range" id="bpmSlider" min="60" max="200" value="120" oninput="updateBpmValue(this.value)" />
@@ -460,36 +439,43 @@
           </div>
         </div>
       </div>
+
+      <!-- Generate Button -->
+      <div class="generate-btn">
+        <button id="generateButton">Generate</button>
+      </div>
+
+      <!-- Output (Audio + Spectrogram) -->
+      <div id="outputSection" class="output-section">
+        <div class="output-title">
+          🎵 Generated Audio:
+        </div>
+        <div class="audio-display">
+          <audio id="audioPlayer" controls>
+            <source id="audioSource" src="" type="audio/wav"/>
+            Your browser does not support the audio element.
+          </audio>
+          <!-- Placeholder Spectrogram -->
+          <div class="spectrogram-container">
+            <canvas id="spectrogramCanvas"></canvas>
+            <div class="spectrogram-placeholder-text">
+              Spectrogram<br/>
+              (placeholder)
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Generate Button + Audio Preview -->
-  <div class="generate-btn">
-    <button id="generateButton">Generate</button>
-    <div id="audioPlayerSection">
-      <h4>🎵 Generated Audio:</h4>
-      <audio id="audioPlayer" controls>
-        <source src="" type="audio/wav" />
-        Your browser does not support the audio element.
-      </audio>
-    </div>
-  </div>
-
-  <!-- ============ Footer ============ -->
+  <!-- ======== Footer ======== -->
   <footer>
-    <div class="footer-links">
-      <a href="#">About</a> | 
-      <a href="#">Contact</a> | 
-      <a href="#">Help</a>
-    </div>
-    <div class="footer-copy">
-      © 2025 Missing Melodies. All rights reserved.
-    </div>
+    © 2025 Missing Melodies. All Rights Reserved.
   </footer>
 
-  <!-- ============ Scripts ============ -->
+  <!-- ======== Script ======== -->
   <script>
-    /* ========== Genre Data ========== */
+    // Hardcoded genre data for demonstration
     const genres = {
       model1: [
         { name: "Hindustani Classical", icon: "🎻", audio: "MusicGen/musicgen_Analysis_Baseline_1.wav" },
@@ -508,10 +494,11 @@
     let selectedGenreCard = null;
     let selectedAudio = "";
 
+    // Update genre buttons based on chosen model
     function updateGenres() {
       const model = document.getElementById("modelSelector").value;
-      const genreContainer = document.getElementById("genreButtons");
-      genreContainer.innerHTML = "";
+      const container = document.getElementById("genreButtons");
+      container.innerHTML = "";
       selectedGenreCard = null;
       selectedAudio = "";
 
@@ -519,13 +506,25 @@
         genres[model].forEach(genre => {
           const card = document.createElement("div");
           card.className = "genre-card";
-          card.innerHTML = `<i>${genre.icon}</i>${genre.name}`;
+          card.textContent = `${genre.icon} ${genre.name}`;
           card.onclick = () => selectGenre(card, genre.audio);
-          genreContainer.appendChild(card);
+          container.appendChild(card);
         });
       }
     }
 
+    // Toggle advanced settings panel
+    function toggleAdvancedSettings() {
+      const section = document.getElementById("advancedSection");
+      section.classList.toggle("open");
+    }
+
+    // BPM slider handler
+    function updateBpmValue(val) {
+      document.getElementById("bpmValue").textContent = val;
+    }
+
+    // Mark selected genre + store audio path
     function selectGenre(card, audio) {
       if (selectedGenreCard) {
         selectedGenreCard.classList.remove("selected");
@@ -535,41 +534,60 @@
       selectedAudio = audio;
     }
 
-    /* ========== Audio Generation Handling ========== */
-    const generateButton = document.getElementById("generateButton");
-    const audioPlayerSection = document.getElementById("audioPlayerSection");
-    const audioPlayer = document.getElementById("audioPlayer");
-    const audioSource = audioPlayer.querySelector("source");
+    // On "Generate" click
+    document.getElementById("generateButton").addEventListener("click", () => {
+      const prompt = document.getElementById("promptInput").value;
+      const model = document.getElementById("modelSelector").value;
+      // advanced settings
+      const bpm = document.getElementById("bpmSlider").value;
+      const key = document.getElementById("keySelect").value;
+      const scale = document.getElementById("scaleSelect").value;
 
-    generateButton.addEventListener("click", () => {
-      if (selectedAudio) {
-        // This is where you'd integrate the advanced settings into your prompt or generation logic
-        // e.g., const bpm = document.getElementById("bpmSlider").value;
-        //       const key = document.getElementById("keySelect").value;
-        //       const scale = document.getElementById("scaleSelect").value;
-        // ... use them as needed ...
-
-        audioSource.src = selectedAudio;
-        audioPlayer.load();
-        audioPlayerSection.style.display = "block";
-        audioPlayer.play();
-      } else {
-        alert("Please select a genre first!");
+      if (!prompt) {
+        alert("Please enter your prompt first!");
+        return;
       }
+      if (!selectedAudio) {
+        alert("Please select a Genre Adapter!");
+        return;
+      }
+
+      // In a real scenario, you'd send { prompt, model, selectedAudio, bpm, key, scale } to your backend
+      // For now, just load the local file for demonstration:
+
+      const outputSection = document.getElementById("outputSection");
+      const audioSource = document.getElementById("audioSource");
+      const audioPlayer = document.getElementById("audioPlayer");
+
+      audioSource.src = selectedAudio; // placeholders
+      audioPlayer.load();
+
+      outputSection.style.display = "block";
+      audioPlayer.play();
+
+      // Optionally, trigger or update your spectrogram here if using a real library
+      drawPlaceholderSpectrogram();
     });
 
-    /* ========== Advanced Settings Toggle ========== */
-    function toggleAdvancedSettings() {
-      const advancedSection = document.getElementById("advancedSection");
-      advancedSection.classList.toggle("open");
+    // Simple placeholder function to fill the canvas
+    function drawPlaceholderSpectrogram() {
+      const canvas = document.getElementById("spectrogramCanvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+
+      // Just draw a pattern for placeholder
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      gradient.addColorStop(0, "rgba(0,255,0,0.3)");
+      gradient.addColorStop(0.5, "rgba(255,0,255,0.3)");
+      gradient.addColorStop(1, "rgba(0,128,255,0.3)");
+
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
-    /* ========== BPM Slider Value Update ========== */
-    function updateBpmValue(value) {
-      document.getElementById("bpmValue").textContent = value;
-    }
-
-    // Initialize genres on page load
+    // Initialize model + genre on page load
     updateGenres();
   </script>
 </body>
