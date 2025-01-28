@@ -6,13 +6,10 @@
   <title>Missing Melodies</title>
 
   <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
 
   <style>
-    /* ========== (Same CSS as you posted) ========== */
+    /* ======== Same styling as your existing code ======= */
     * {
       box-sizing: border-box; margin: 0; padding: 0;
     }
@@ -39,13 +36,14 @@
       font-weight: 600; font-size: 48px; margin-bottom: 0;
       text-shadow: 0 0 10px rgba(255,255,255,0.7);
     }
-    .tagline { margin-top: 6px; font-size: 16px; font-weight: 300; font-style: italic; opacity: 0.9; }
+    .tagline {
+      margin-top: 6px; font-size: 16px; font-weight: 300; font-style: italic; opacity: 0.9;
+    }
 
     .main-container {
       width: 90%; max-width: 1200px; margin: 20px auto 40px;
       display: flex; flex-wrap: wrap; gap: 20px;
     }
-
     .prompt-section {
       flex: 1 1 100%; background: rgba(0,0,0,0.3); backdrop-filter: blur(8px);
       border-radius: 16px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.25);
@@ -209,13 +207,16 @@
 
       <!-- Model & Genre Adapters -->
       <div class="selection-container">
+        <!-- Model Selector (just for UI, optional) -->
         <div class="selection-box">
           <h3>Model Selector:</h3>
-          <select id="modelSelector" onchange="updateGenres()">
-            <option value="model1">MusicGen</option>
-            <option value="model2">Mustango</option>
+          <select id="modelSelector">
+            <option value="MusicGen">MusicGen</option>
+            <option value="Mustango">Mustango</option>
           </select>
         </div>
+
+        <!-- Genre Adapters (again, just for UI) -->
         <div class="selection-box">
           <h3>Genre Adapters:</h3>
           <div id="genreButtons" class="genre-container"></div>
@@ -260,9 +261,7 @@
 
       <!-- Output Section: Waveform + Spectrogram -->
       <div id="outputSection" class="output-section">
-        <div class="output-title">
-          🎵 Generated Audio:
-        </div>
+        <div class="output-title">🎵 Generated Audio:</div>
         <div class="audio-display">
           <div class="wavesurfer-container">
             <div id="waveform"></div>
@@ -277,69 +276,30 @@
     © 2025 Missing Melodies. All Rights Reserved.
   </footer>
 
-  <!-- WaveSurfer scripts (before our main script) -->
+  <!-- WaveSurfer scripts -->
   <script src="https://unpkg.com/wavesurfer.js"></script>
   <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.spectrogram.min.js"></script>
 
   <script>
-    /* 1) Provide icons for each genre object */
+    // -- We only store "name" & "icon" in genres; no local audio paths. --
     const genres = {
-      model1: [
-        { name: "Baseline",     icon: "🪗", audio: "MusicGen/musicgen_Recall_Baseline_0.wav" },
-        { name: "Classical", icon: "🎼", audio: "MusicGen/musicgen_Recall_Finetuned_0.wav" },
-        { name: "Maqam",     icon: "🎤", audio: "MusicGen/musicgen_Recall_Finetuned_1.wav" }
+      MusicGen: [
+        { name: "Baseline",  icon: "🪗" },
+        { name: "Classical", icon: "🎼" },
+        { name: "Maqam",     icon: "🎤" }
       ],
-      model2: [
-        { name: "Baseline",     icon: "🪗", audio: "Mustango/mustango_baseline_recall_output_0.wav" },
-        { name: "Classical", icon: "🎼", audio: "Mustango/mustango_finetuned_recall_output_0.wav" },
-        { name: "Maqam",     icon: "🎤", audio: "Mustango/mustango_finetuned_recall_output_1.wav" }
+      Mustango: [
+        { name: "Baseline",  icon: "🪗" },
+        { name: "Classical", icon: "🎼" },
+        { name: "Maqam",     icon: "🎤" }
       ]
     };
 
     let selectedGenreCard = null;
-    let selectedAudio = "";
+    let selectedGenre = "";
 
-    /* WaveSurfer instance */
+    // Initialize WaveSurfer with Spectrogram
     let wavesurfer = null;
-
-    function updateGenres() {
-      const model = document.getElementById("modelSelector").value;
-      const container = document.getElementById("genreButtons");
-      container.innerHTML = "";
-      selectedGenreCard = null;
-      selectedAudio = "";
-
-      if (genres[model]) {
-        genres[model].forEach(genre => {
-          const card = document.createElement("div");
-          card.className = "genre-card";
-          /* Show icon + name */
-          card.textContent = `${genre.icon} ${genre.name}`;
-          card.onclick = () => selectGenre(card, genre.audio);
-          container.appendChild(card);
-        });
-      }
-    }
-
-    function toggleAdvancedSettings() {
-      const section = document.getElementById("advancedSection");
-      section.classList.toggle("open");
-    }
-
-    function updateBpmValue(val) {
-      document.getElementById("bpmValue").textContent = val;
-    }
-
-    function selectGenre(card, audio) {
-      if (selectedGenreCard) {
-        selectedGenreCard.classList.remove("selected");
-      }
-      card.classList.add("selected");
-      selectedGenreCard = card;
-      selectedAudio = audio;
-    }
-
-    /* Init WaveSurfer with spectrogram plugin */
     function initWaveSurfer() {
       wavesurfer = WaveSurfer.create({
         container: '#waveform',
@@ -356,32 +316,104 @@
       });
     }
 
-    document.getElementById("generateButton").addEventListener("click", () => {
+    // Populate genre buttons for the selected model
+    function updateGenres() {
+      const model = document.getElementById("modelSelector").value;
+      const container = document.getElementById("genreButtons");
+      container.innerHTML = "";
+      selectedGenreCard = null;
+      selectedGenre = "";
+
+      if (genres[model]) {
+        genres[model].forEach(genre => {
+          const card = document.createElement("div");
+          card.className = "genre-card";
+          card.textContent = `${genre.icon} ${genre.name}`;
+          card.onclick = () => selectGenre(card, genre.name);
+          container.appendChild(card);
+        });
+      }
+    }
+
+    function selectGenre(card, genreName) {
+      if (selectedGenreCard) {
+        selectedGenreCard.classList.remove("selected");
+      }
+      card.classList.add("selected");
+      selectedGenreCard = card;
+      selectedGenre = genreName;
+    }
+
+    // Show/hide advanced settings
+    function toggleAdvancedSettings() {
+      const section = document.getElementById("advancedSection");
+      section.classList.toggle("open");
+    }
+
+    function updateBpmValue(val) {
+      document.getElementById("bpmValue").textContent = val;
+    }
+
+    // -- MAIN GENERATE LOGIC: POST to Flask, get WAV, load in WaveSurfer
+    document.getElementById("generateButton").addEventListener("click", async () => {
       const prompt = document.getElementById("promptInput").value;
+      const model = document.getElementById("modelSelector").value;
+      const bpm   = document.getElementById("bpmSlider").value;
+      const key   = document.getElementById("keySelect").value;
+      const scale = document.getElementById("scaleSelect").value;
+
       if (!prompt) {
         alert("Please enter your prompt first!");
         return;
       }
-      if (!selectedAudio) {
+      if (!selectedGenre) {
         alert("Please select a Genre Adapter!");
         return;
       }
 
-      // Show the output section
+      // Show output section
       document.getElementById("outputSection").style.display = "block";
 
-      // Load audio into WaveSurfer
-      wavesurfer.load(selectedAudio);
+      try {
+        // 1) POST to your Flask server
+        const response = await fetch("http://YOUR_REMOTE_IP:8000/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prompt,
+            model,
+            genre: selectedGenre,
+            bpm,
+            key,
+            scale
+          })
+        });
 
-      // Auto-play once loaded
-      wavesurfer.once('ready', () => {
-        wavesurfer.play();
-      });
+        if (!response.ok) {
+          throw new Error("Server responded with an error: " + response.status);
+        }
+
+        // 2) Read result as Blob
+        const audioBlob = await response.blob();
+
+        // 3) Create a local URL for WaveSurfer
+        const audioURL = URL.createObjectURL(audioBlob);
+
+        // 4) Load it in WaveSurfer
+        wavesurfer.load(audioURL);
+        wavesurfer.once('ready', () => {
+          wavesurfer.play();
+        });
+
+      } catch (error) {
+        console.error("Generation failed:", error);
+        alert("Failed to generate audio!");
+      }
     });
 
-    // Initialize on page load
-    updateGenres();
+    // On page load
     initWaveSurfer();
+    updateGenres(); // Populate default genres for "MusicGen"
   </script>
 </body>
 </html>
