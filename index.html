@@ -457,14 +457,14 @@
     // Hardcoded genre data for demonstration
     const genres = {
       model1: [
-        { name: "Classical", icon: "🎻", audio: "MusicGen/musicgen_Recall_Baseline_0.wav" },
-        { name: "Maqam", icon: "🎤", audio: "MusicGen/musicgen_Recall_Baseline_1.wav" },
-        { name: "Folk", icon: "🎸", audio: "MusicGen/musicgen_Recall_Baseline_2.wav" }
+        { name: "Classical", audio: "MusicGen/musicgen_Recall_Finetuned_0.wav" },
+        { name: "Maqam", audio: "MusicGen/musicgen_Recall_Finetuned_1.wav" },
+        { name: "Folk", audio: "MusicGen/musicgen_Recall_Finetuned_2.wav" }
       ],
       model2: [
-        { name: "Classical", icon: "🎸", audio: "Mustango/mustango_baseline_recall_output_0.wav" },
-        { name: "Maqam", icon: "🎵", audio: "Mustango/mustango_baseline_recall_output_1.wav" },
-        { name: "Folk", icon: "🎵", audio: "Mustango/mustango_baseline_recall_output_2.wav" }
+        { name: "Classical", audio: "Mustango/mustango_finetuned_recall_output_0.wav" },
+        { name: "Maqam", audio: "Mustango/mustango_finetuned_recall_output_1.wav" },
+        { name: "Folk", audio: "Mustango/mustango_finetuned_recall_output_0.wav" }
       ]
     };
 
@@ -474,7 +474,7 @@
     // 2) Create a global WaveSurfer variable
     let wavesurfer = null;
 
-    // Update genre buttons based on chosen model
+    // Update genre buttons based on the chosen model
     function updateGenres() {
       const model = document.getElementById("modelSelector").value;
       const container = document.getElementById("genreButtons");
