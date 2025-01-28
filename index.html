@@ -4,11 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Missing Melodies</title>
-  <!-- Fonts -->
+
+  <!-- Google Fonts -->
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
     rel="stylesheet"
   />
+
   <style>
     /* ======== Global Styles ======== */
     * {
@@ -231,7 +233,7 @@
       box-shadow: 0px 6px 14px rgba(255,87,34,0.5);
     }
 
-    /* ======== Output Section (Audio + Spectrogram) ======== */
+    /* ======== Output Section (WaveSurfer Waveform & Spectrogram) ======== */
     .output-section {
       display: none; /* hidden until user generates */
       background: rgba(255,255,255,0.15);
@@ -253,41 +255,22 @@
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
     }
 
-    /* Audio player nicely styled */
-    audio {
-      max-width: 320px;
+    /* Container for WaveSurfer (both waveform & spectrogram) */
+    .wavesurfer-container {
+      flex: 1 1 100%;
+    }
+    #waveform {
       width: 100%;
-      outline: none;
-      border-radius: 8px;
+      height: 120px;
+      margin-bottom: 15px;
     }
-
-    /* Placeholder spectrogram container */
-    .spectrogram-container {
-      flex: 1 1 300px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: rgba(0,0,0,0.2);
-      border-radius: 12px;
-      min-height: 160px;
-      position: relative;
-      overflow: hidden;
-    }
-    .spectrogram-container canvas {
+    #spectrogram {
       width: 100%;
-      height: 100%;
-      background: #222; /* darkest bg for contrast */
-      display: block;
-    }
-    .spectrogram-placeholder-text {
-      position: absolute;
-      font-size: 14px;
-      color: #aaa;
-      text-align: center;
+      height: 256px;
     }
 
     /* ======== Advanced Settings Toggle (Optional) ======== */
@@ -360,9 +343,6 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
-      }
-      audio {
-        max-width: 100%;
       }
     }
   </style>
@@ -445,23 +425,16 @@
         <button id="generateButton">Generate</button>
       </div>
 
-      <!-- Output (Audio + Spectrogram) -->
+      <!-- Output (WaveSurfer Waveform + Spectrogram) -->
       <div id="outputSection" class="output-section">
         <div class="output-title">
           🎵 Generated Audio:
         </div>
         <div class="audio-display">
-          <audio id="audioPlayer" controls>
-            <source id="audioSource" src="" type="audio/wav"/>
-            Your browser does not support the audio element.
-          </audio>
-          <!-- Placeholder Spectrogram -->
-          <div class="spectrogram-container">
-            <canvas id="spectrogramCanvas"></canvas>
-            <div class="spectrogram-placeholder-text">
-              Spectrogram<br/>
-              (placeholder)
-            </div>
+          <!-- WaveSurfer containers -->
+          <div class="wavesurfer-container">
+            <div id="waveform"></div>
+            <div id="spectrogram"></div>
           </div>
         </div>
       </div>
@@ -472,6 +445,13 @@
   <footer>
     © 2025 Missing Melodies. All Rights Reserved.
   </footer>
+
+  <!-- 
+       1) Add WaveSurfer & Spectrogram plugin
+          (Make sure these are included BEFORE your main script)
+  -->
+  <script src="https://unpkg.com/wavesurfer.js"></script>
+  <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.spectrogram.min.js"></script>
 
   <!-- ======== Script ======== -->
   <script>
@@ -493,6 +473,9 @@
 
     let selectedGenreCard = null;
     let selectedAudio = "";
+
+    // 2) Create a global WaveSurfer variable
+    let wavesurfer = null;
 
     // Update genre buttons based on chosen model
     function updateGenres() {
@@ -534,6 +517,23 @@
       selectedAudio = audio;
     }
 
+    // 3) Initialize WaveSurfer with spectrogram plugin
+    function initWaveSurfer() {
+      wavesurfer = WaveSurfer.create({
+        container: '#waveform',
+        waveColor: '#ffb6c1',
+        progressColor: '#ff4081',
+        backgroundColor: 'transparent', // or any color you like
+        backend: 'WebAudio',
+        plugins: [
+          WaveSurfer.spectrogram.create({
+            container: '#spectrogram',
+            labels: true
+          })
+        ]
+      });
+    }
+
     // On "Generate" click
     document.getElementById("generateButton").addEventListener("click", () => {
       const prompt = document.getElementById("promptInput").value;
@@ -552,43 +552,25 @@
         return;
       }
 
-      // In a real scenario, you'd send { prompt, model, selectedAudio, bpm, key, scale } to your backend
-      // For now, just load the local file for demonstration:
-
+      // Show the output section (waveform + spectrogram)
       const outputSection = document.getElementById("outputSection");
-      const audioSource = document.getElementById("audioSource");
-      const audioPlayer = document.getElementById("audioPlayer");
-
-      audioSource.src = selectedAudio; // placeholders
-      audioPlayer.load();
-
       outputSection.style.display = "block";
-      audioPlayer.play();
 
-      // Optionally, trigger or update your spectrogram here if using a real library
-      drawPlaceholderSpectrogram();
+      // 4) Load audio into WaveSurfer
+      wavesurfer.load(selectedAudio);
+
+      // Optional: auto-play when ready
+      wavesurfer.once('ready', () => {
+        wavesurfer.play();
+      });
+
+      // If you want to pass the advanced settings somewhere, you'd do so here
+      // e.g., console.log({prompt, model, bpm, key, scale});
     });
 
-    // Simple placeholder function to fill the canvas
-    function drawPlaceholderSpectrogram() {
-      const canvas = document.getElementById("spectrogramCanvas");
-      const ctx = canvas.getContext("2d");
-
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-
-      // Just draw a pattern for placeholder
-      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      gradient.addColorStop(0, "rgba(0,255,0,0.3)");
-      gradient.addColorStop(0.5, "rgba(255,0,255,0.3)");
-      gradient.addColorStop(1, "rgba(0,128,255,0.3)");
-
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
-
-    // Initialize model + genre on page load
+    // Initialize everything on page load
     updateGenres();
+    initWaveSurfer();
   </script>
 </body>
 </html>
