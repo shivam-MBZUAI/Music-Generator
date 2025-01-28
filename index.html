@@ -4,26 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Missing Melodies</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <style>
+    /* Background Animation */
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(120deg, #1a0033, #330066, #4b0082); /* Rich gradient */
-      background-attachment: fixed;
+      background: linear-gradient(-45deg, #1a0033, #330066, #4b0082, #6a1b9a);
+      background-size: 400% 400%;
+      animation: gradientBG 8s infinite alternate;
       color: white;
       margin: 0;
       padding: 0;
     }
-    
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    /* Header */
     header {
       padding: 20px;
       text-align: center;
-      font-size: 36px;
-      font-weight: 700;
-      font-family: 'Playfair Display', serif; /* More elegant font */
+      font-size: 42px;
+      font-family: 'Playfair Display', serif;
       text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.9), 0px 0px 25px rgba(255, 105, 180, 0.7);
     }
-    
+
     .tagline {
       text-align: center;
       font-size: 18px;
@@ -33,17 +40,13 @@
       font-style: italic;
     }
 
-
     .container {
       display: flex;
       justify-content: space-between;
       padding: 20px;
     }
 
-    .prompt-box {
-      width: 60%;
-    }
-
+    /* Text Box */
     .prompt-box textarea {
       width: 100%;
       height: 140px;
@@ -51,121 +54,97 @@
       border: none;
       padding: 15px;
       font-size: 16px;
-      background: rgba(255, 255, 255, 0.2); /* Semi-transparent */
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
       box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
       color: white;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    
+
+    .prompt-box textarea:hover {
+      transform: scale(1.02);
+      box-shadow: 0px 4px 15px rgba(255, 255, 255, 0.3);
+    }
+
     .prompt-box textarea::placeholder {
       color: #ddd;
     }
 
-
-    .examples {
-      margin-top: 15px;
+    /* Example Prompts */
+    .examples div {
+      background: linear-gradient(135deg, #3366cc, #6699ff);
+      padding: 12px;
+      border-radius: 15px;
+      box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3);
     }
 
-    .examples h4 {
+    .examples ul {
       font-size: 16px;
-      color: #ddd;
-      margin-bottom: 10px;
+      color: white;
+      list-style-type: none;
+      padding: 0;
     }
 
-  .examples div {
-    background: linear-gradient(135deg, #3366cc, #6699ff);
-    padding: 12px;
-    border-radius: 15px;
-    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3);
-  }
-  
-  .examples ul {
-    font-size: 16px;
-    color: white;
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .examples ul li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .examples ul li::before {
-    content: "🎶";
-    font-size: 18px;
-  }
-
-
-    .right-section {
-      width: 35%;
+    .examples ul li {
       display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .models-genres h3 {
+      align-items: center;
+      gap: 10px;
       margin-bottom: 10px;
     }
 
+    .examples ul li::before {
+      content: "🎶";
+      font-size: 18px;
+    }
+
+    /* Model Selector */
     .models-genres select {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       font-size: 16px;
       border-radius: 25px;
       border: none;
       cursor: pointer;
-      background-color: #4caf50;
+      background: linear-gradient(135deg, #4caf50, #66bb6a);
       color: white;
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s ease;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
 
     .models-genres select:hover {
-      background-color: #66bb6a;
+      background: linear-gradient(135deg, #66bb6a, #4caf50);
+      transform: scale(1.05);
     }
 
-    .genre-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
-    }
-
+    /* Genre Adapters */
     .genre-card {
-      background: linear-gradient(135deg, rgba(255, 105, 180, 0.8), rgba(255, 69, 0, 0.8)); 
+      background: linear-gradient(135deg, rgba(255, 69, 0, 0.9), rgba(255, 105, 180, 0.9));
       color: white;
       border-radius: 25px;
       padding: 12px 24px;
       text-align: center;
       font-size: 16px;
       font-weight: bold;
-      backdrop-filter: blur(10px); /* Glass effect */
-      transition: transform 0.3s, box-shadow 0.3s;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s ease;
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    
+
     .genre-card:hover {
       transform: scale(1.15);
       box-shadow: 0px 6px 15px rgba(255, 69, 0, 0.8);
     }
 
-
+    /* Highlight Selected Genre */
     .genre-card.selected {
-      background: linear-gradient(135deg, #4caf50, #8bc34a); /* Highlighted green */
-      color: white;
-      box-shadow: 0px 6px 15px rgba(0, 255, 0, 0.5); /* Green glow effect */
+      background: linear-gradient(135deg, #4caf50, #8bc34a);
+      box-shadow: 0px 6px 15px rgba(0, 255, 0, 0.5);
       transform: scale(1.1);
     }
 
-    .generate-btn {
-      text-align: center;
-      margin-top: 20px;
-    }
-    
+    /* Generate Button */
     .generate-btn button {
       background: linear-gradient(135deg, #ff4d4d, #ff6600);
       color: white;
@@ -176,15 +155,14 @@
       font-weight: 600;
       cursor: pointer;
       box-shadow: 0px 4px 10px rgba(255, 77, 77, 0.6);
-      transition: all 0.3s ease;
-    }
-    
-    .generate-btn button:hover {
-      background: linear-gradient(135deg, #ff6600, #ff4d4d);
-      transform: scale(1.1);
-      box-shadow: 0px 6px 15px rgba(255, 140, 0, 0.8);
+      transition: all 0.3s ease, transform 0.3s ease;
     }
 
+    .generate-btn button:hover {
+      background: linear-gradient(135deg, #ff6600, #ff4d4d);
+      transform: scale(1.1) rotate(1deg);
+      box-shadow: 0px 6px 15px rgba(255, 140, 0, 0.8);
+    }
   </style>
 </head>
 <body>
@@ -199,8 +177,8 @@
         <h4>Example Prompts:</h4>
         <div>
           <ul>
-            <li>🎵 Imagine a traditional Hindustani Classical performance with Saarangi and Lalat raga.</li>
-            <li>🎵 Compose a soulful Hindustani Classical piece blending Tabla and Vilambit laya.</li>
+            <li>🎶 Imagine a traditional Hindustani Classical performance with Saarangi and Lalat raga.</li>
+            <li>🎶 Compose a soulful Hindustani Classical piece blending Tabla and Vilambit laya.</li>
           </ul>
         </div>
       </div>
@@ -209,7 +187,7 @@
     <div class="right-section">
       <div class="models-genres">
         <h3>Model Selector:</h3>
-        <select id="modelSelector" onchange="updateGenres()">
+        <select id="modelSelector">
           <option value="model1">MusicGen</option>
           <option value="model2">Mustango</option>
           <option value="model3">Mousai</option>
@@ -218,79 +196,16 @@
 
       <div class="models-genres">
         <h3>Genre Adapters:</h3>
-        <div id="genreButtons" class="genre-container"></div>
+        <div class="genre-container">
+          <div class="genre-card">🎻 Hindustani Classical</div>
+          <div class="genre-card">🎤 Maqam</div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="generate-btn">
-    <button id="generateButton">Generate</button>
-    <div id="audioPlayerSection" style="display: none; margin-top: 20px; text-align: center;">
-      <h4 style="font-size: 18px; margin-bottom: 10px; color: #ddd;">🎵 Generated Audio:</h4>
-      <audio id="audioPlayer" controls style="width: 100%; max-width: 400px;">
-        <source src="" type="audio/wav">
-        Your browser does not support the audio element.
-      </audio>
-    </div>
+    <button>Generate</button>
   </div>
-
-  <script>
-    const genres = {
-      model1: [
-        { name: "Hindustani Classical", icon: "🎻", audio: "MusicGen/musicgen_Analysis_Baseline_1.wav" },
-        { name: "Maqam", icon: "🎤", audio: "MusicGen/musicgen_Analysis_Baseline_3.wav" }
-      ],
-      model2: [
-        { name: "Folk", icon: "🎸", audio: "MusicGen/musicgen_Analysis_Baseline_1.wav" },
-        { name: "Rock", icon: "🎵", audio: "MusicGen/musicgen_Analysis_Baseline_3.wav" }
-      ]
-    };
-
-    let selectedGenreCard = null;
-    let selectedAudio = "";
-
-    function updateGenres() {
-      const model = document.getElementById("modelSelector").value;
-      const genreContainer = document.getElementById("genreButtons");
-      genreContainer.innerHTML = "";
-      selectedGenreCard = null;
-      selectedAudio = "";
-
-      genres[model].forEach((genre, index) => {
-        const card = document.createElement("div");
-        card.className = "genre-card";
-        card.innerHTML = `<i>${genre.icon}</i>${genre.name}`;
-        card.onclick = () => selectGenre(card, genre.audio);
-        genreContainer.appendChild(card);
-      });
-    }
-
-    function selectGenre(card, audio) {
-      if (selectedGenreCard) {
-        selectedGenreCard.classList.remove("selected");
-      }
-      card.classList.add("selected");
-      selectedGenreCard = card;
-      selectedAudio = audio;
-    }
-
-    const generateButton = document.getElementById("generateButton");
-    const audioPlayerSection = document.getElementById("audioPlayerSection");
-    const audioPlayer = document.getElementById("audioPlayer");
-    const audioSource = audioPlayer.querySelector("source");
-
-    generateButton.addEventListener("click", () => {
-      if (selectedAudio) {
-        audioSource.src = selectedAudio;
-        audioPlayer.load();
-        audioPlayerSection.style.display = "block";
-        audioPlayer.play();
-      } else {
-        alert("Please select a genre first!");
-      }
-    });
-
-    updateGenres();
-  </script>
 </body>
 </html>
